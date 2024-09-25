@@ -1,28 +1,24 @@
 import { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
-import { Infer } from "next/dist/compiled/superstruct";
+import axios from "axios";
 
-type Customer = {
+export type Customer = {
   id: number;
   name: string;
   industry: string;
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
+  const result = await axios.get<{
+    customers: Customer[];
+  }>("http://127.0.0.1:8000/api/customers/");
+  console.log(result.data.customers);
+
   return {
     props: {
-      customers: [
-        {
-          id: 1,
-          name: "John Smith",
-          industry: "Restaurant",
-        },
-        {
-          id: 2,
-          name: "Sal Brown",
-          industry: "Tech",
-        },
-      ] as Customer[],
+      customers: result.data.customers,
     },
+    revalidate: 60,
+
   };
 };
 
@@ -35,10 +31,10 @@ const Customers: NextPage = ({
       <h1>Customers</h1>
       {customers.map((customer: Customer) => {
         return (
-          <div>
+          <div key={customer.id}>
             <p>{customer.name}</p>
-            <p>{customer.industry}</p>
-            <p>{customer.id}</p>
+            <p> {customer.industry} </p>
+            <p> {customer.id} </p>
           </div>
         );
       })}
