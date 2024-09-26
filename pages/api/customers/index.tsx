@@ -44,6 +44,8 @@ export default async (
       };
       console.log(req.body);
       const insertedId = await addCustomer(customer);
+      res.revalidate('/customers');
+      res.revalidate('/customers/'+ insertedId);
       res.status(200).json(insertedId);
     } else {
       res.status(400).json({ error: "name and industry are required." });
