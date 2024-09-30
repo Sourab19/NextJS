@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 
 export type Order = {
   description: string;
-  price: {$numberDecimal: string};
+  price: { $numberDecimal: string };
   _id: ObjectId;
 };
 
@@ -22,7 +22,7 @@ export type Customer = {
   _id?: ObjectId;
   name: string;
   industry: string;
-  orders: Order[];
+  orders?: Order[];
 };
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -43,7 +43,7 @@ const Customers: NextPage = ({
   const { data: { data: { customers = c } = {} } = {} } = useQuery({
     queryKey: ["customers"],
     queryFn: () => {
-      return axios("/api/customers") as any;
+      return axios("/api/customers");
     },
   });
 

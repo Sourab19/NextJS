@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "../../../lib/mongodb";
-import { Customer } from "../../customers";
+import { Customer, Order } from "../../customers";
 import { ObjectId } from "mongodb";
 import NextCors from "nextjs-cors";
-import { METHODS } from "http";
 
 type Return = {
   customers: Customer[];
@@ -31,7 +30,7 @@ export const addCustomer = async (customer: Customer): Promise<ObjectId> => {
   return response.insertedId;
 };
 
-export default async (
+export const apiCustomers = async (
   req: NextApiRequest,
   res: NextApiResponse<Return | ObjectId | { error: string }>
 ) => {
@@ -49,6 +48,9 @@ export default async (
       const customer: Customer = {
         name: req.body.name,
         industry: req.body.industry,
+        orders: req.body.orders.map((order: Order) => {
+          return { ...order, _id: new ObjectId() };
+        }),
       };
       console.log(req.body);
       const insertedId = await addCustomer(customer);
@@ -60,3 +62,4 @@ export default async (
     }
   }
 };
+export default apiCustomers;
