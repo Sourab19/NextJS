@@ -12,10 +12,17 @@ import CustomerComponent from "../../components/Customer";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 
+export type Order = {
+  description: string;
+  price: {$numberDecimal: string};
+  _id: ObjectId;
+};
+
 export type Customer = {
   _id?: ObjectId;
   name: string;
   industry: string;
+  orders: Order[];
 };
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -45,17 +52,16 @@ const Customers: NextPage = ({
   if (customers) {
     return (
       <Container>
-      <Grid container spacing={5} sx={{ mt: 1}}>
-        
-        {customers.map((customer: Customer) => {
-          return (
-            <CustomerComponent
-              key={customer._id?.toString()}
-              customer={customer}
-            />
-          );
-        })}
-      </Grid>
+        <Grid container spacing={5} sx={{ mt: 1 }}>
+          {customers.map((customer: Customer) => {
+            return (
+              <CustomerComponent
+                key={customer._id?.toString()}
+                customer={customer}
+              />
+            );
+          })}
+        </Grid>
       </Container>
     );
   }
