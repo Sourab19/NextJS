@@ -4,6 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Info from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
 import type { Customer } from "../pages/customers";
+import Link from "next/link";
 
 const Customer = ({ customer }: { customer: Customer }) => {
   return (
@@ -21,7 +22,16 @@ const Customer = ({ customer }: { customer: Customer }) => {
         {customer.name}
       </span>
       <p> {customer.industry} </p>
-      <Button variant="contained">View Orders</Button>
+      <Link
+        href={{
+          pathname: "/orders",
+          query: {
+            customerId: customer._id?.toString(),
+          },
+        }}
+      >
+        <Button variant="contained">View Orders</Button>
+      </Link>
     </Grid>
   );
 };

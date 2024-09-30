@@ -147,7 +147,10 @@ export default function Theme(props: any) {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <Link href="/" style={{ color: "inherit", textDecoration: "inherit" }}>
+            <Link
+              href="/"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
               <ListItemButton selected={router.pathname === "/" ? true : false}>
                 <ListItemIcon>
                   <DashboardIcon />
@@ -155,13 +158,23 @@ export default function Theme(props: any) {
                 <ListItemText primary="Dashboard" />
               </ListItemButton>
             </Link>
-            {/* { <ListItemButton>
-              <ListItemIcon>
-                <ShoppingCartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Orders" />
-            </ListItemButton>} */}
-            <Link href="/customers" style={{ color: "inherit", textDecoration: "inherit" }}>
+            <Link
+              href="/orders"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              <ListItemButton
+                selected={router.pathname === "/orders" ? true : false}
+              >
+                <ListItemIcon>
+                  <ShoppingCartIcon />
+                </ListItemIcon>
+                <ListItemText primary="Orders" />
+              </ListItemButton>
+            </Link>
+            <Link
+              href="/customers"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
               <ListItemButton
                 selected={router.pathname === "/customers" ? true : false}
               >
